@@ -16,7 +16,7 @@
         }
         public void AddActor(Actor actor)
         {
-            _context.Actors.Add(actor);
+            this._context.Actors.Add(actor);
 
             _context.SaveChanges();
         }
