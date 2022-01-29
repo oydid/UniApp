@@ -16,12 +16,18 @@
         }
         public void AddActor(Actor actor)
         {
-            throw new NotImplementedException();
+            _context.Actors.Add(actor);
+
+            _context.SaveChanges();
         }
 
         public void Delete(int Id)
         {
-            throw new NotImplementedException();
+            var actor = this._context.Actors.FirstOrDefault(n => n.Id == Id);
+
+            this._context.Actors.Remove(actor);
+
+            this._context.SaveChanges();
         }
 
         public IEnumerable<Actor> GetActors()
@@ -32,12 +38,18 @@
 
         public Actor GetById(int Id)
         {
-            throw new NotImplementedException();
+            var result = this._context.Actors.FirstOrDefault(n => n.Id == Id);
+
+            return result;
         }
 
         public Actor Update(int Id, Actor updatedActor)
         {
-            throw new NotImplementedException();
+            this._context.Update(updatedActor);
+
+            this._context.SaveChanges();
+
+            return updatedActor;
         }
     }
 }
