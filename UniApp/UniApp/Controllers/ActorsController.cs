@@ -34,7 +34,7 @@
             {
                 return View(actor);
             }
-            //TODO middleware 404 page
+         
             this._repo.AddActor(actor);
             return RedirectToAction(nameof(Index));
         }
