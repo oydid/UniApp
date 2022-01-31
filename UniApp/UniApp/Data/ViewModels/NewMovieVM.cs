@@ -1,14 +1,12 @@
-﻿namespace UniApp.Models
+﻿namespace UniApp.Data.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using System.Threading.Tasks;
-    public class Movie
+    public class NewMovieVM
     {
-        [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Name is required!")]
         public string Name { get; set; }
@@ -21,9 +19,9 @@
         public DateTime? UpdatedAt { get; set; }
 
         //Relationships
-        public List<Actor_Movie> Actor_Movies { get; set; }
+        [Display(Name = "Actors")]
+        public List<int> Actor_Ids { get; set; }
+        [Display(Name = "Studio")]
         public int StudioId { get; set; }
-        [ForeignKey("StudioId")]
-        public Studio Studio { get; set; }
     }
 }
