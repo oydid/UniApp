@@ -11,7 +11,10 @@
             <thead>
                 <tr class="text-center">
                     <th>@Html.DisplayNameFor(model => model.Name)</th>
-                    <th>Actions</th>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th>Actions</th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -21,20 +24,23 @@
                         <td class="text-center">
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
-                        <td class="text-center">
-                            <div class="row d-flex justify-content-center">
-                                <a class="btn btn-outline-primary m-1" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit </a>
-                                <a class="btn btn-outline-info  m-1" asp-controller="Studios" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Details </a>
-                                <form action="Delete" method="post" class="m-1">
-                                    <input type="hidden" name="Id" value="@item.Id" />
-                                    <button type="submit" value="Confirm" class="btn btn-outline-danger text-white test-alert"
-                                            id="test_alert" asp-action="Delete"
-                                            onclick="return confirm('Are you sure you wish to delete this studio?');">
-                                        <i class="bi bi-trash">Delete</i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td class="text-center">
+                                <div class="row d-flex justify-content-center">
+                                    <a class="btn btn-outline-primary m-1" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit </a>
+                                    <a class="btn btn-outline-info  m-1" asp-controller="Studios" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Details </a>
+                                    <form action="Delete" method="post" class="m-1">
+                                        <input type="hidden" name="Id" value="@item.Id" />
+                                        <button type="submit" value="Confirm" class="btn btn-outline-danger text-white test-alert"
+                                                id="test_alert" asp-action="Delete"
+                                                onclick="return confirm('Are you sure you wish to delete this studio?');">
+                                            <i class="bi bi-trash">Delete</i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
@@ -44,7 +50,10 @@
 
 </div>
 
-<div class="text-white float-right">
-    <a asp-controller="Studios" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle"></i> Add New</a>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-white float-right">
+        <a asp-controller="Studios" asp-action="Create" class="btn btn-success"><i class="bi bi-plus-circle"></i> Add New</a>
+    </div>
+}
 

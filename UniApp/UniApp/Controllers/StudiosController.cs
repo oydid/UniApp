@@ -1,5 +1,6 @@
 ﻿namespace UniApp.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -8,6 +9,7 @@
     using UniApp.Models;
     using UniApp.Repositories;
 
+    [Authorize]
     public class StudiosController : Controller
     {
         private readonly IStudioRepository _repo;
@@ -17,17 +19,20 @@
         }
         public IActionResult Index()
         {
+            User.Identity.Name.Length.ToString();
             var data = this._repo.GetStudios();
             return View(data);
         }
 
         //Get
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Name")] Studio studio)
         {
             if (!ModelState.IsValid)
@@ -40,6 +45,7 @@
         }
 
         //Get
+        [Authorize]
         public IActionResult Details(int id)
         {
             var studioView = this._repo.GetById(id);
@@ -52,6 +58,7 @@
         }
 
         //Get
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var studioView = this._repo.GetById(id);
@@ -64,6 +71,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(int id, [Bind("Id, Name")] Studio studio)
         {
             if (!ModelState.IsValid)
@@ -77,6 +85,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             this._repo.Delete(id);

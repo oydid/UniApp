@@ -1,5 +1,6 @@
 ﻿namespace UniApp.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -22,12 +23,19 @@
         }
 
         //Get
+        [Authorize]
         public IActionResult Create()
         {
+            if (User.Identity.Name != "test@test.com")
+            {
+                return View("403");
+            }
+
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Name, Description, Image")]Actor actor)
         {
             if (!ModelState.IsValid)
@@ -40,6 +48,7 @@
         }
 
         //Get
+        [Authorize]
         public IActionResult Details(int id)
         {
             var actorView = this._repo.GetById(id);
@@ -48,22 +57,35 @@
                 return View("404");
             }
 
+            if (User.Identity.Name != "test@test.com")
+            {
+                return View("403");
+            }
+
             return View(actorView);
         }
 
         //Get
+        [Authorize]
         public IActionResult Edit(int id)
         {
+            
             var actorView = this._repo.GetById(id);
             if (actorView == null)
             {
                 return View("404");
             }
 
+            if (User.Identity.Name != "test@test.com")
+            {
+                return View("403");
+            }
+
             return View(actorView);
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(int id, [Bind("Id, Name, Description, Image")] Actor actor)
         {
             if (!ModelState.IsValid)
@@ -77,6 +99,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             this._repo.Delete(id);

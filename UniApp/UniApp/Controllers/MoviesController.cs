@@ -1,5 +1,6 @@
 ﻿namespace UniApp.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System;
@@ -24,6 +25,7 @@
         }
 
         //Get
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             var movieDropdownValues = await this._repo.GetDropdownValues();
@@ -35,6 +37,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(NewMovieVM newMVM)
         {
             if (!ModelState.IsValid)
@@ -54,6 +57,7 @@
         }
 
         //Get
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             var movieView = await this._repo.GetByIdAsync(id);
@@ -66,6 +70,7 @@
         }
 
         //Get
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var movieView = await this._repo.GetByIdAsync(id);
@@ -93,6 +98,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, NewMovieVM newMVM)
         {
             if (!ModelState.IsValid)
@@ -111,6 +117,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             this._repo.Delete(id);
